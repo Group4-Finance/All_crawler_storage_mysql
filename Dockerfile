@@ -14,13 +14,13 @@ RUN pip install pipenv==2022.4.8
 # 建立工作目錄 /crawler
 #在映像檔中建立一個新的資料夾 /crawler，通常作為應用程式的主目錄。
 #
-RUN mkdir /All_crawler_to_mysql
+RUN mkdir /All_crawler_storage_mysql
 
 # 將當前目錄（與 Dockerfile 同層）所有內容複製到容器的 /crawler 資料夾
-COPY . /All_crawler_to_mysql/
+COPY . /All_crawler_storage_mysql/
 
 # 設定容器的工作目錄為 /crawler，後續的指令都在這個目錄下執行
-WORKDIR /All_crawler_to_mysql/
+WORKDIR /All_crawler_storage_mysql/
 
 # 根據 Pipfile.lock 安裝所有依賴（確保環境一致性）
 # Pipfile.lock 是 由 Pipenv (pipenv lock) 自動產生的，你不應該手動編輯它。

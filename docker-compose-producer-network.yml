@@ -4,12 +4,12 @@ services:
   producer_multi_queue:  # 定義一個服務，名稱為 crawler_twse
     image: kong567/mysql:0.0.1  # 使用的映像檔名稱與標籤（版本）
     hostname: "all_crawler_container"  # 設定 hostname = twse
-    working_dir: /All_crawler_to_mysql
+    working_dir: /All_crawler_storage_mysql
     command: pipenv run python crawler/producer_multi_queue.py
     # restart: always  # 若容器停止或崩潰，自動重新啟動
     environment:
       - TZ=Asia/Taipei  # 設定時區為台北（UTC+8）
-      - PYTHONPATH=/All_crawler_to_mysql
+      - PYTHONPATH=/All_crawler_storage_mysql
     networks:
       - my_network  # 將此服務連接到 my_network 網路
 

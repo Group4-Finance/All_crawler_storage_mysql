@@ -10,19 +10,19 @@ RUN apt-get update && \
 RUN pip install pipenv==2022.4.8
 
 # 建立工作目錄 /crawler
-RUN mkdir /All_crawler_to_mysql
+RUN mkdir /All_crawler_storage_mysql
 
 # 將當前目錄（與 Dockerfile 同層）所有內容複製到容器的 /crawler 資料夾
-COPY ./crawler /All_crawler_to_mysql/crawler
-COPY ./setup.py /All_crawler_to_mysql
-COPY ./genenv.py /All_crawler_to_mysql
-COPY ./Pipfile /All_crawler_to_mysql
-COPY ./Pipfile.lock /All_crawler_to_mysql
-COPY ./README.md /All_crawler_to_mysql
-COPY ./local.ini /All_crawler_to_mysql
+COPY ./crawler /All_crawler_storage_mysql/crawler
+COPY ./setup.py /All_crawler_storage_mysql
+COPY ./genenv.py /All_crawler_storage_mysql
+COPY ./Pipfile /All_crawler_storage_mysql
+COPY ./Pipfile.lock /All_crawler_storage_mysql
+COPY ./README.md /All_crawler_storage_mysql
+COPY ./local.ini /All_crawler_storage_mysql
 
 # 設定容器的工作目錄為 /crawler，後續的指令都在這個目錄下執行
-WORKDIR /All_crawler_to_mysql/
+WORKDIR /All_crawler_storage_mysql/
 
 # 根據 Pipfile.lock 安裝所有依賴（確保環境一致性）
 RUN pipenv sync
