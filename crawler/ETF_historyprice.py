@@ -4,6 +4,7 @@
 import yfinance as yf
 import pandas as pd
 import time
+from loguru import logger
 from datetime import datetime
 from crawler.worker import app
 from crawler.mysqlcreate import upload_data_to_mysql_ETF_historyprice
@@ -38,4 +39,13 @@ def historyprice(ticker) :
 
     df = df_single[columns_to_save].rename(columns={"Adj Close": "Adj_Close"})
     df = df.reset_index()
+    df['Stock_id'] = ticker
+    logger.info(df)
     upload_data_to_mysql_ETF_historyprice(df)
+ 
+# etf_list = ['00757.TW','0052.TW','00713.TW','00830.TW','00733.TW','00850.TW','00692.TW','0050.TW','00662.TW','00646.TW']
+
+# for tickers in etf_list:
+#     if __name__ == "__main__":
+#         historyprice(tickers)
+    

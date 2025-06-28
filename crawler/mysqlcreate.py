@@ -2,7 +2,7 @@ import pandas as pd
 import requests
 
 from sqlalchemy import create_engine, text  # 建立資料庫連線的工具（SQLAlchemy）
-from sqlalchemy import BigInteger, Column, Date, DateTime, Integer ,Float ,DECIMAL, MetaData, String, Table
+from sqlalchemy import BigInteger, Column, Date, DateTime, Integer ,Float ,DECIMAL,VARCHAR, MetaData, String, Table
 from sqlalchemy.dialects.mysql import (
     insert,
 )  
@@ -82,6 +82,7 @@ def upload_data_to_mysql_ETF_historyprice(df: pd.DataFrame):
         "ETF_historyprice",  # 資料表名稱
         metadata,
         Column("Date", Date, primary_key=True),
+        Column("Stock_id", VARCHAR(50), primary_key=True),
         Column("Close", DECIMAL(5,2)), 
         Column("Adj_Close", DECIMAL(5,2)), 
         Column("Volume", Integer),  
@@ -133,6 +134,7 @@ def upload_data_to_mysql_ETF_PremiumDiscount(df: pd.DataFrame):
         "ETF_PremiumDiscount",  # 資料表名稱
         metadata,
         Column("Date", Date, primary_key=True),
+        Column("Stock_id",VARCHAR(50), primary_key=True),
         Column("Net_worth", Float), 
         Column("Market_Capitalization", Float), 
         Column("premium_discount_rate", String(10)),  

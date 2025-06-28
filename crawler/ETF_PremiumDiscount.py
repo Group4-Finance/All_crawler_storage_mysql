@@ -41,10 +41,10 @@ def  PremiumDiscount(etf_list):
 
     # 計算折溢價利率（公式： (市價 - 淨值) / 淨值 ）
     df_MoneyDJ['折溢價利率(%)'] = ((df_MoneyDJ['市價'] - df_MoneyDJ['淨值']) / df_MoneyDJ['淨值'] * 100).map(lambda x: f"{x:.2f}%")
-
+    
     df_MoneyDJ = df_MoneyDJ.rename(columns={"交易日期": "Date",
                                             "淨值": "Net_worth",
                                             "市價": "Market_Capitalization",
                                             "折溢價利率(%)": "premium_discount_rate"})
-        
+    df_MoneyDJ['Stock_id'] = etf_list 
     upload_data_to_mysql_ETF_PremiumDiscount(df_MoneyDJ)
