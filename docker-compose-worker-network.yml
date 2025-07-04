@@ -20,7 +20,7 @@ services:
 
   
   ETF_historyprice:  # 定義一個服務，名稱為 crawler_twse
-    image: jeremyjhao/mysql:0.0.5 # 使用的映像檔名稱與標籤（版本）
+    image: jeremyjhao/mysql:${DOCKER_IMAGE_VERSION} # 使用的映像檔名稱與標籤（版本）
     hostname: "historyprice"  # 設定 hostname = twse
     command: pipenv run celery -A crawler.worker worker -Q historyprice --loglevel=info --hostname=%h  
     # 啟動容器後執行的命令，這裡是啟動 Celery worker，指定 app 為 crawler.worker，設定日誌等級為 info，
@@ -38,7 +38,7 @@ services:
 
 
   PremiumDiscount:  # 定義一個服務，名稱為 crawler_twse
-    image: jeremyjhao/mysql:0.0.5  # 使用的映像檔名稱與標籤（版本）
+    image: jeremyjhao/mysql:${DOCKER_IMAGE_VERSION}  # 使用的映像檔名稱與標籤（版本）
     hostname: "PremiumDiscount"  # 設定 hostname = twse
     command: pipenv run celery -A crawler.worker worker -Q PremiumDiscount --loglevel=info --hostname=%h  
     # 啟動容器後執行的命令，這裡是啟動 Celery worker，指定 app 為 crawler.worker，設定日誌等級為 info，
@@ -56,7 +56,7 @@ services:
 
 
   MagaBank_NEWS:  # 定義一個服務，名稱為 crawler_twse
-    image: jeremyjhao/mysql:0.0.5  # 使用的映像檔名稱與標籤（版本）
+    image: jeremyjhao/mysql:${DOCKER_IMAGE_VERSION}  # 使用的映像檔名稱與標籤（版本）
     hostname: "MagaBank_NEWS"  # 設定 hostname = twse
     command: pipenv run celery -A crawler.worker worker -Q MagaBank_NEWS --loglevel=info --hostname=%h  
     # 啟動容器後執行的命令，這裡是啟動 Celery worker，指定 app 為 crawler.worker，設定日誌等級為 info，
@@ -72,7 +72,7 @@ services:
 
 
   PTT:  # 定義一個服務，名稱為 crawler_twse
-    image: jeremyjhao/mysql:0.0.5  # 使用的映像檔名稱與標籤（版本）
+    image: jeremyjhao/mysql:${DOCKER_IMAGE_VERSION}  # 使用的映像檔名稱與標籤（版本）
     hostname: "PTT_news"  # 設定 hostname = twse
     command: pipenv run celery -A crawler.worker worker -Q PTT_news --loglevel=info --hostname=%h  
     # 啟動容器後執行的命令，這裡是啟動 Celery worker，指定 app 為 crawler.worker，設定日誌等級為 info，
@@ -90,7 +90,7 @@ services:
 
 
   vix:  # 定義一個服務，名稱為 crawler_twse
-    image: jeremyjhao/mysql:0.0.5  # 使用的映像檔名稱與標籤（版本）
+    image: jeremyjhao/mysql:${DOCKER_IMAGE_VERSION}  # 使用的映像檔名稱與標籤（版本）
     hostname: "VIX"  # 設定 hostname = twse
     command: pipenv run celery -A crawler.worker worker -Q VIX --loglevel=info --hostname=%h  
     # 啟動容器後執行的命令，這裡是啟動 Celery worker，指定 app 為 crawler.worker，設定日誌等級為 info，
