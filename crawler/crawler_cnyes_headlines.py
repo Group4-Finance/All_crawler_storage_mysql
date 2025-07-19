@@ -5,6 +5,7 @@ import time
 import random
 from datetime import datetime, timedelta
 from crawler.mysqlcreate import upload_data_to_mysql_cnyes_headlines
+import sys
 
 
 
@@ -12,7 +13,7 @@ from crawler.worker import app  # Celery app 引入
 
 # Celery 任務註冊
 @app.task()
-def cnyes_headlines(month: str = "2025-06"):
+def cnyes_headlines(month: str = "2025-07"):
     # 日期處理
     try:
         month_start = datetime.strptime(month, "%Y-%m")
@@ -99,3 +100,10 @@ def cnyes_headlines(month: str = "2025-06"):
 
 
     print(f"{month_str} 完成，共儲存 {len(monthly_data)} 筆新聞到 {filename}")
+
+
+
+if __name__ == "__main__":
+    month = sys.argv[1]
+    print(f"✅ 進入 main，cnyes_headlines: {month}", flush=True)
+    cnyes_headlines(month)

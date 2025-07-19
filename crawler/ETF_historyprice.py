@@ -8,11 +8,20 @@ from loguru import logger
 from datetime import datetime
 from crawler.worker import app
 from crawler.mysqlcreate import upload_data_to_mysql_ETF_historyprice
+import logging
+import sys
+
+
+logging.basicConfig(
+    stream=sys.stdout,
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(message)s"
+)
 
 @app.task()
 
 def historyprice(ticker) :
-
+    print(f"ETF_historyprice.py 啟動，收到的 ticker 是：{sys.argv[1]}")
     # === 2 ：設定參數 ===
     start_date = '2020-01-01'
     end_date = pd.Timestamp.today().strftime('%Y-%m-%d')
@@ -41,8 +50,17 @@ def historyprice(ticker) :
     df = df.reset_index()
     df['Stock_id'] = ticker
     logger.info(df)
+    logging.info("已完成爬蟲，準備寫入資料庫")
     upload_data_to_mysql_ETF_historyprice(df)
- 
+    logging.info("已寫入 MySQL")
+    
+
+
+if __name__ == "__main__":
+    ticker = sys.argv[1]
+    print(f"✅ 進入 main，historyprice: {ticker}", flush=True)
+    historyprice(ticker)
+
 # etf_list = ['00757.TW','0052.TW','00713.TW','00830.TW','00733.TW','00850.TW','00692.TW','0050.TW','00662.TW','00646.TW']
 
 # for tickers in etf_list:

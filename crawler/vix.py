@@ -5,6 +5,7 @@ import pandas as pd
 from datetime import datetime
 from crawler.worker import app
 from crawler.mysqlcreate import upload_data_to_mysql_vix
+import sys
 
 @app.task()
 
@@ -29,5 +30,12 @@ def vix_data(Volatility_Index):
 
     # Selecting columns
     vix_data = vix_data[['Date', 'Close']]
+    print("爬蟲完成")
 
     upload_data_to_mysql_vix(vix_data)
+    print("輸入進mysql完成")
+
+if __name__ == "__main__":
+    Volatility_Index = sys.argv[1]
+    print(f"✅ 進入 main，vix_data: {Volatility_Index}", flush=True)
+    vix_data(Volatility_Index)

@@ -6,6 +6,7 @@ from datetime import datetime
 import time
 from crawler.worker import app
 from crawler.mysqlcreate import upload_data_to_mysql_ptt
+import sys
 
 @app.task()
 
@@ -90,12 +91,13 @@ def PTT_news(start_index):
     base_url = "https://www.ptt.cc/bbs/Stock/index{}.html"
     all_data = []
 
-    for i in range(start_index, end_index + 1):
+    for i in range(int(start_index), end_index + 1):
         url = base_url.format(i)
         print(f"Crawling: {url}")
         try:
             data = crawl_page(url)
             all_data.extend(data)
+            print(f"爬到第{i}")
             time.sleep(2.0)
         except Exception as e:
             print(f"⚠️ Error at {url}: {e}")
@@ -106,10 +108,19 @@ def PTT_news(start_index):
                             "人氣": "Popularity",
                             "日期": "Date",
                             })
+  
+
     df["Date"] = pd.to_datetime(df["Date"], errors='coerce')
     df = df[df["Title"].notna()]
     df = df[df["Title"] != "沒標題"]
     df = df[df["Date"].notna()]
     # df['Date'] = df['Date'].apply(lambda x: None if pd.isna(x) else x)
     upload_data_to_mysql_ptt(df)
+    print("輸入進mysql完成")
     print("✅ Done. Saved to ptt_stock_realdate.csv")
+
+
+if __name__ == "__main__":
+    start_index = sys.argv[1]
+    print(f"✅ 進入 main，ptt: {start_index}", flush=True)
+    PTT_news(start_index)

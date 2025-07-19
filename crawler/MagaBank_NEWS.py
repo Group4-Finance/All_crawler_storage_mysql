@@ -9,6 +9,7 @@ import jieba
 import logging
 from crawler.worker import app
 from crawler.mysqlcreate import upload_data_to_mysql_MagaBank_NEWS
+import sys
 
 @app.task()
 
@@ -68,12 +69,16 @@ def Bank_NEWS(news_date):
                             "連結": "Link",
                             "標籤": "Label"})
     
-    
+    print("爬蟲完成")
     
     upload_data_to_mysql_MagaBank_NEWS(df)
+    print("輸入進mysql完成")
     # df = pd.json_normalize(table)
     # print(tabulate.tabulate(df, headers='keys', tablefmt='grid'))
 
     
-               
+if __name__ == "__main__":
+    news_date = sys.argv[1]
+    print(f"✅ 進入 main，Bank_NEWS: {news_date}", flush=True)
+    Bank_NEWS(news_date)
    

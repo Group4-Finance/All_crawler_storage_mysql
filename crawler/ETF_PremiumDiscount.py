@@ -3,6 +3,7 @@ import pandas as pd
 import datetime
 from crawler.worker import app
 from crawler.mysqlcreate import upload_data_to_mysql_ETF_PremiumDiscount
+import sys
 
 @app.task() 
 
@@ -47,4 +48,12 @@ def  PremiumDiscount(etf_list):
                                             "市價": "Market_Capitalization",
                                             "折溢價利率(%)": "premium_discount_rate"})
     df_MoneyDJ['Stock_id'] = etf_list 
+    print("爬蟲完成")
     upload_data_to_mysql_ETF_PremiumDiscount(df_MoneyDJ)
+    print("輸入進mysql完成")
+
+
+if __name__ == "__main__":
+    etf_list = sys.argv[1]
+    print(f"✅ 進入 main，PremiumDiscount: {etf_list}", flush=True)
+    PremiumDiscount(etf_list)
