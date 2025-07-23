@@ -68,7 +68,22 @@ def PTT_news(start_index):
         # print(soup)
         a = soup.find_all("a", {"class" : "btn wide"})
         # print(a)
+        
         href = a[1]["href"]
+        # 在訪問 a[1] 之前，先檢查 a 的長度
+        if len(a) > 1:
+            href = a[1]["href"]
+        else:
+            # 當 a 中沒有足夠的元素時，輸出警告並處理
+            print(f"警告: List 'a' 中元素少於 2 個: {a}")
+            href = a[0]["href"] if len(a) > 0 else None  # 如果有第一個元素，則用它，否則設為 None
+        
+        # 如果 href 是 None，則需要適當處理或中止
+        if href is None:
+            print("找不到有效的 href，退出。")
+            return None  # 或者可以選擇拋出異常，依需求而定
+        
+        
         split_href = href.split("/")
         latest_index = split_href[-1]
 
